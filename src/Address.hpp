@@ -37,8 +37,6 @@ public:
 
 	static DWORD           FUNC_Logprintf_03z_R4;
 	static DWORD           FUNC_Logprintf_03z_R4_1000p;
-	static DWORD           FUNC_Logprintf_037;
-	static DWORD           FUNC_Logprintf_037_R2_1;
 
 	// Functions
 	static DWORD           FUNC_ClientJoin_RPC;

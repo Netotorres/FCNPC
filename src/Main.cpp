@@ -44,12 +44,6 @@ PLUGIN_EXPORT bool PLUGIN_CALL Load(void **ppData)
 	} else if ((DWORD)logprintf == CAddress::FUNC_Logprintf_03z_R4) {
 		version = SAMP_VERSION_03z_R4_1000p;
 		strlcpy(szSampVersion, "0.3z R4-1000p", sizeof(szSampVersion));
-	} else if ((DWORD)logprintf == CAddress::FUNC_Logprintf_037) {
-		version = SAMP_VERSION_037;
-		strlcpy(szSampVersion, "0.3.7", sizeof(szSampVersion));
-	} else if ((DWORD)logprintf == CAddress::FUNC_Logprintf_037_R2_1) {
-		version = SAMP_VERSION_037_R2_1;
-		strlcpy(szSampVersion, "0.3.7 R2-1", sizeof(szSampVersion));
 	} else {
 		version = SAMP_VERSION_UNKNOWN;
 		strlcpy(szSampVersion, "Unknown", sizeof(szSampVersion));

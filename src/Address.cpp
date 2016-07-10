@@ -13,13 +13,9 @@
 
 #if defined(WIN32)
 	DWORD CAddress::FUNC_Logprintf_03z_R4 = 0x004875F0;
-	DWORD CAddress::FUNC_Logprintf_037 = 0x0048A0B0;
-	DWORD CAddress::FUNC_Logprintf_037_R2_1 = 0x0048C8D0;
 #elif defined(LINUX)
 	DWORD CAddress::FUNC_Logprintf_03z_R4 = 0x080A7A90;
 	DWORD CAddress::FUNC_Logprintf_03z_R4_1000p = 0x080A7A90;
-	DWORD CAddress::FUNC_Logprintf_037 = 0x080A9000;
-	DWORD CAddress::FUNC_Logprintf_037_R2_1 = 0x080A91D0;
 #endif
 
 // Functions
@@ -60,40 +56,6 @@ void CAddress::Initialize(eSAMPVersion sampVersion)
 			FUNC_ClientJoin_RPC = 0x48C460;
 			VAR_ServerAuthentication = 0x4f3390;
 			VAR_NetVersion = 0xfcf;
-			OFFSET_RemoteSystemManager = 0x33c;
-			OFFSET_RemoteSystemSize = 0xcb8;
-			OFFSET_RemoteSystem__ConnectMode = 0xcb0;
-			OFFSET_RemoteSystem__Unknown = 0xcb5;
-			break;
-
-		case SAMP_VERSION_037:
-			FUNC_CPlayerPool__DeletePlayer = 0x466740;
-			FUNC_CPlayer__Kill = 0x4831f0;
-			FUNC_CPlayer__EnterVehicle = 0x483840;
-			FUNC_CPlayer__ExitVehicle = 0x483960;
-			FUNC_CPlayer__SpawnForWorld = 0x485900;
-			FUNC_GetVehicleModelInfo = 0x486e10;
-			FUNC_CConsole__GetIntVariable = 0x488db0;
-			FUNC_ClientJoin_RPC = 0x48f040;
-			VAR_ServerAuthentication = 0x4f6cf0;
-			VAR_NetVersion = 0xfd9;
-			OFFSET_RemoteSystemManager = 0x33c;
-			OFFSET_RemoteSystemSize = 0xcb8;
-			OFFSET_RemoteSystem__ConnectMode = 0xcb0;
-			OFFSET_RemoteSystem__Unknown = 0xcb5;
-			break;
-
-		case SAMP_VERSION_037_R2_1:
-			FUNC_CPlayerPool__DeletePlayer = 0x466570;
-			FUNC_CPlayer__Kill = 0x484620;
-			FUNC_CPlayer__EnterVehicle = 0x484c70;
-			FUNC_CPlayer__ExitVehicle = 0x484f50;
-			FUNC_CPlayer__SpawnForWorld = 0x486d30;
-			FUNC_GetVehicleModelInfo = 0x488240;
-			FUNC_CConsole__GetIntVariable = 0x48b5b0;
-			FUNC_ClientJoin_RPC = 0x4918f0;
-			VAR_ServerAuthentication = 0x4f5fe8;
-			VAR_NetVersion = 0xfd9;
 			OFFSET_RemoteSystemManager = 0x33c;
 			OFFSET_RemoteSystemSize = 0xcb8;
 			OFFSET_RemoteSystem__ConnectMode = 0xcb0;
@@ -152,40 +114,6 @@ void CAddress::Initialize(eSAMPVersion sampVersion)
 			FUNC_ClientJoin_RPC = 0x80ae660;
 			VAR_ServerAuthentication = 0x819c5ac;
 			VAR_NetVersion = 0xfcf;
-			OFFSET_RemoteSystemManager = 0x334;
-			OFFSET_RemoteSystemSize = 0xc69;
-			OFFSET_RemoteSystem__ConnectMode = 0xc62;
-			OFFSET_RemoteSystem__Unknown = 0xc67;
-			break;
-
-		case SAMP_VERSION_037:
-			FUNC_CPlayerPool__DeletePlayer = 0x80d0600;
-			FUNC_CPlayer__Kill = 0x80cadb0;
-			FUNC_CPlayer__EnterVehicle = 0x80cbd50;
-			FUNC_CPlayer__ExitVehicle = 0x80cbed0;
-			FUNC_CPlayer__SpawnForWorld = 0x80ccb50;
-			FUNC_GetVehicleModelInfo = 0x80d58a0;
-			FUNC_CConsole__GetIntVariable = 0x80a0040;
-			FUNC_ClientJoin_RPC = 0x80afcf0;
-			VAR_ServerAuthentication = 0x81a06e8;
-			VAR_NetVersion = 0xfd9;
-			OFFSET_RemoteSystemManager = 0x334;
-			OFFSET_RemoteSystemSize = 0xc69;
-			OFFSET_RemoteSystem__ConnectMode = 0xc62;
-			OFFSET_RemoteSystem__Unknown = 0xc67;
-			break;
-
-		case SAMP_VERSION_037_R2_1:
-			FUNC_CPlayerPool__DeletePlayer = 0x80d0a90;
-			FUNC_CPlayer__Kill = 0x80cb220;
-			FUNC_CPlayer__EnterVehicle = 0x80cc1c0;
-			FUNC_CPlayer__ExitVehicle = 0x80cc340;
-			FUNC_CPlayer__SpawnForWorld = 0x80ccfc0;
-			FUNC_GetVehicleModelInfo = 0x80d5d30;
-			FUNC_CConsole__GetIntVariable = 0x80a0070;
-			FUNC_ClientJoin_RPC = 0x80b0030;
-			VAR_ServerAuthentication = 0x81aa8a8;
-			VAR_NetVersion = 0xfd9;
 			OFFSET_RemoteSystemManager = 0x334;
 			OFFSET_RemoteSystemSize = 0xc69;
 			OFFSET_RemoteSystem__ConnectMode = 0xc62;
