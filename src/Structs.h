@@ -394,7 +394,7 @@ struct CPlayer
 	BOOL					bIsInModShop;		// 9711
 	WORD					wSkillLevel[11];	// 9715
 	int						iLastMarkerUpdate;	// 9737 - 9741
-	PLAYER_SPAWN_INFO		spawn;				// 9741 - 9787
+	CPlayerSpawnInfo		spawn;				// 9741 - 9787
 	BOOL					bReadyToSpawn;		// 9787 - 9791
 	BYTE					byteWantedLevel;	// 9791 - 9792
 	BYTE					byteFightingStyle;  // 9792 - 9793

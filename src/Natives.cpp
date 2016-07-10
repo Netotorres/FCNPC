@@ -179,7 +179,7 @@ cell AMX_NATIVE_CALL CNatives::FCNPC_IsStreamedForAnyone(AMX *amx, cell *params)
 		return 0;
 	}
 
-	for (int i = 0; i < pNetGame->pPlayerPool->dwPlayerPoolSize; i++) {
+	for (int i = 0; i < MAX_PLAYERS; i++) {
 		// Ignore non connected players and the same player
 		if (!pNetGame->pPlayerPool->bIsPlayerConnectedEx[i]) {
 			continue;
