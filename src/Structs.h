@@ -115,11 +115,13 @@ struct CAimSyncData
 	BYTE			byteCameraZoom : 6;		// 29
 	BYTE			byteWeaponState  : 2;	// 29
 	BYTE			unk;					// 30 - 31
+/*
 	WORD			wCameraObject;			// 31 - 33
 	WORD			wCameraVehicle;			// 33 - 35
 	WORD			wCameraPlayer;			// 35 - 37
 	WORD			wCameraActor;			// 37 - 39
-	// Size = 39
+*/
+	// Size = 31
 };
 
 struct CVehicleSyncData
@@ -128,14 +130,17 @@ struct CVehicleSyncData
 	WORD			wUDAnalog;				// 0x0021 - 0x0023
 	WORD			wLRAnalog;				// 0x0023 - 0x0025
 	WORD			wKeys;					// 0x0025 - 0x0027
-	float			fQuaternion[4];			// 0x002B - 0x0037
+	float			fQuaternion[4];			// 0x0027 - 0x0037
 	CVector			vecPosition;			// 0x0037 - 0x0043
 	CVector			vecVelocity;			// 0x0043 - 0x004F
 	float			fHealth;				// 0x004F - 0x0053
 	BYTE			bytePlayerHealth;		// 0x0053 - 0x0054
 	BYTE			bytePlayerArmour;		// 0x0054 - 0x0055
+/*
 	BYTE			bytePlayerWeapon : 6;	// 0x0055 - 0x0056
 	BYTE			unk_2 : 2;				// 0x0055 - 0x0056
+*/
+	BYTE			bytePlayerWeapon;		// 0x0055 - 0x0056
 	BYTE			byteSirenState;			// 0x0056 - 0x0057
 	BYTE			byteGearState;			// 0x0057 -	0x0058
 	WORD			wTrailerID;				// 0x0058 - 0x005A
@@ -171,8 +176,11 @@ struct CSyncData
 	float			fQuaternion[4];			// 0x0088 - 0x008C
 	BYTE			byteHealth;				// 0x0098 - 0x0099
 	BYTE			byteArmour;				// 0x0099 - 0x009A
+/*
 	BYTE			byteWeapon : 6;				// 0x009A - 0x009B
 	BYTE			_unk_ : 2;
+*/
+	BYTE			byteWeapon;				// 0x009A - 0x009B
 	BYTE			byteSpecialAction;		// 0x009B - 0x009C
 	CVector			vecVelocity;			// 0x009C - 0x00A8
 	CVector			vecSurfing;				// 0x00A8 - 0x00B4
@@ -292,14 +300,15 @@ struct CPlayerSpawnInfo // size  46
 	int				iSpawnWeaponsAmmo[3];	// 34 - 46
 };
 
-struct CBulletSyncData // sizeof = 40
+struct CBulletSyncData // sizeof = 39
 {
 	BYTE			byteHitType;
 	WORD			wHitID;
 	CVector			vecHitOrigin;
 	CVector			vecHitTarget;
 	CVector			vecCenterOfHit;
-	BYTE			byteWeaponID;
+	// 0.3.7
+	// BYTE			byteWeaponID;
 };
 
 struct CPVar
@@ -321,121 +330,125 @@ struct CPlayerVar
 
 struct CPlayer
 {
-	CAimSyncData			aimSyncData;			// 0 - 39
-	CVehicleSyncData		vehicleSyncData;		// 39 -
-	CPassengerSyncData		passengerSyncData;		//
-	CSyncData				syncData;				// 126 - 194
-	CUnoccupiedSyncData		unoccupiedSyncData;		// 194 - 261
-	CSpectatingSyncData		spectatingSyncData;		// 261 - 279
-	CTrailerSyncData		trailerSyncData;		// 279 - 333
+	CAimSyncData			aimSyncData;			// 0 - 31
+	CVehicleSyncData		vehicleSyncData;		// 31 - 94
+	CPassengerSyncData		passengerSyncData;		// 94 - 118
+	CSyncData				syncData;				// 118 - 186
+	CUnoccupiedSyncData		unoccupiedSyncData;		// 186 - 253
+	CSpectatingSyncData		spectatingSyncData;		// 253 - 271
+	CTrailerSyncData		trailerSyncData;		// 271 - 325
+/*
 	DWORD					dwPlayerSyncUnused;		// 333 - 337
 	DWORD					dwVehicleSyncUnused;	// 337 - 341
-	BYTE					byteStreamedIn[MAX_PLAYERS];				// 341 - 1341
-	BYTE					byteVehicleStreamedIn[MAX_VEHICLES];		// 1341 - 3341
-	BYTE					byteSomethingUnused[1000];					// 3341 - 4341
-	BYTE					byte3DTextLabelStreamedIn[1024];			// 4341  - 5365
-	BYTE					bPickupStreamedIn[MAX_PICKUPS];				// 5365 - 9461
-	BYTE					byteActorStreamedIn[MAX_PLAYERS];			// 9461 - 10461
-	DWORD					dwStreamedInPlayers;						// 10461 - 10465
-	DWORD					dwStreamedInVehicles;						// 10465 - 10469
-	DWORD					dwStreamedInSomethingUnused;				// 10469 - 10473
-	DWORD					dwStreamedIn3DTextLabels;					// 10479 - 10477
-	DWORD					dwStreamedInPickups;						// 10477 - 10481
-	DWORD					dwStreamedInActors;							// 10481 - 10485
-	DWORD					bHasSetVehiclePos;	// 10485 - 10489
-	DWORD					dwSetVehiclePosTick;// 10489 - 10493
-	CVector					vecVehicleNewPos;	// 10493 - 10505
-	BOOL					bCameraTarget;		// 10505
-	DWORD					bHasSpawnInfo;		// 10509
-	BOOL					bUpdateKeys;		// 10513
-	CVector					vecPosition;		// 10517
-	float					fHealth;			// 10529 - 10533
-	float					fArmour;			// 10533 - 10537
-	float					fQuaternion[4];		// 10537 - 10553
-	float					fAngle;				// 10553 - 10557
-	CVector					vecVelocity;		// 10557 - 10569
-	WORD					wUDAnalog;			// 10569
-	WORD					wLRAnalog;			// 10571
-	DWORD					dwKeys;				// 10573 - 10577
-	DWORD					dwOldKeys;			// 10577 - 10581
-	BOOL					bEditObject;		// 10581 - 10585
-	BOOL					bEditAttachedObject;// 10585 - 10589
-	WORD					wDialogID;			// 10589 - 10591
-	CPlayerTextDraw*		pTextdraw;			// 10591 - 10595
-	CPlayerText3DLabels*	p3DText;			// 10595 - 10599
-	WORD					wPlayerId;			// 10599 - 10601
-	int						iUpdateState;		// 10601 - 10605
-	//DWORD					dwLastSyncTick;		// 10605 - 10609
-	CAttachedObject			attachedObject[MAX_ATTACHED_OBJECTS]; // 10605 - 11125
-	BOOL					attachedObjectSlot[MAX_ATTACHED_OBJECTS]; // 11125 - 11165
-	BOOL					bHasAimSync;		// 11165 - 11169
-	BOOL					bHasTrailerSync;	// 11169 - 11173
-	BOOL					bHasUnoccupiedSync;	// 11173 - 11177
-	BYTE					byteState;			// 11177 - 11178
-	CVector					vecCPPos;			// 11178 - 11190
-	float					fCPSize;			// 11190 - 11194
-	BOOL					bIsInCP;			// 11194 - 11198
-	CVector					vecRaceCPPos;		// 11198 - 11210
-	CVector					vecRaceCPNextPos;	// 11210 - 11222
-	BYTE					byteRaceCPType;		// 11222 - 11223 // TODO -> replace
-	float					fRaceCPSize;		// 11223 - 11227
-	BOOL					bIsInRaceCP;		// 11227 - 11231
-	BOOL					bIsInModShop;		// 11231 - 11235
-	WORD					wSkillLevel[11];	// 11235 - 11257
-	int						iLastMarkerUpdate;	// 11257 - 11261
-	CPlayerSpawnInfo		spawn;				// 11261 - 11307
-	BOOL					bReadyToSpawn;		// 11307 - 11311
-	BYTE					byteWantedLevel;	// 11311 - 11312
-	BYTE					byteFightingStyle;  // 11312 - 11313
-	BYTE					byteSeatId;			// 11313 - 11314
-	WORD					wVehicleId;			// 11314 - 11316
-	DWORD					dwNickNameColor;	// 11316 - 11320
-	BOOL					bShowCheckpoint;	// 11320 - 11324
-	BOOL					bShowRaceCheckpoint;// 11324 - 11328
-	int						iInteriorId;		// 11328 - 11332
-	WORD					wWeaponAmmo[12];	// 11332 - 11356
-	PAD(pad10, 28);								// 11356 - 11384
-	BYTE					byteWeaponId[12];	// 11384 - 11396
-	BYTE					byteWeaponID_unknown;// 11396 - 11397
-	BYTE					byteCurrentWeapon;	// 11397 - 11398
-	WORD					wTargetId;			// 11398 - 11400
-	WORD					wTargetActorId;		// 11400 - 11402
-	DWORD					dwLastShotTick;		// 11402 - 11406
-	BYTE					dwLastShotWeapon;	// 11406 - 11407
-	CBulletSyncData			bulletSyncData;		// 11407 - 11447
-	BYTE					m_byteTime;			// 11447 - 11448
-	float					m_fGameTime;		// 11448 - 11452
-	BYTE					byteSpectateType;	// 11452 - 11453
-	DWORD					wSpectateID;		// 11453 - 11457
-	DWORD					dwLastStreaming;	// 11457 - 11461
-	DWORD					dwNPCRecordingType;	// 11461 - 11465
-	FILE					*pRecordingFile;	// 11465 - 11469
-	DWORD					dwFirstNPCWritingTime; // 11469 - 11473
-	PAD(unused, 9);								// 11473 - 11482
-	CPlayerVar*				pPlayerVars;		// 11482 - 11486
+*/
+	BYTE					byteStreamedIn[MAX_PLAYERS];	// 325 - 825
+	BYTE					byteVehicleStreamedIn[MAX_VEHICLES]; // 825 - 2825
+	BYTE					byteSomethingUnused[1000];			// 2825 - 3825
+	BYTE					byte3DTextLabelStreamedIn[1024];// 3825  - 4849
+	BYTE					bPickupStreamedIn[MAX_PICKUPS]; // 4849 - 8945
+	// BYTE					byteActorStreamedIn[MAX_PLAYERS];			// 9461 - 10461
+	DWORD					dwStreamedInPlayers;
+	DWORD					dwStreamedInVehicles;	// 8949 - 8953
+	DWORD					dwStreamedInSomethingUnused;					// 8953 - 8957
+	DWORD					dwStreamedIn3DTextLabels; // 8957 - 8961
+	DWORD					dwStreamedInPickups;// 8961 - 8965
+	// DWORD					dwStreamedInActors;							// 10481 - 10485
+	DWORD					bHasSetVehiclePos;	// 8965 - 8969
+	DWORD					dwSetVehiclePosTick;// 8969 - 8981
+	CVector					vecVehicleNewPos;	// 8981 - 8985
+	// BOOL					bCameraTarget;		// 10505
+	DWORD					bHasSpawnInfo;		// 8985 - 8989
+	BOOL					bUpdateKeys;		// 0x231D - 0x2321     // 8164
+	CVector					vecPosition;		// 0x2321 - 0x232D
+	float					fHealth;			// 0x232D - 0x2331
+	float					fArmour;			// 0x2331 - 0x2335
+	float					fQuaternion[4];		// 0x2335 - 0x2345
+	float					fAngle;				// 0x2345 - 0x2349
+	CVector					vecVelocity;		// 0x2349 - 0x2355
+	WORD					wUDAnalog;			// 9045
+	WORD					wLRAnalog;			// 9047
+	DWORD					dwKeys;				// 9049
+	DWORD					dwOldKeys;			// 9053
+	BOOL					bEditObject;		// 9057
+	BOOL					bEditAttachedObject;// 9061
+	WORD					wDialogID;			// 9065
+	CPlayerTextDraw*		pTextdraw;			// 9067
+	CPlayerText3DLabels*	p3DText;			// 9071
+	WORD					wPlayerId;			// 9075
+	int						iUpdateState;		// 9079
+	DWORD					dwLastSyncTick;		// 9083
+	CAttachedObject			attachedObject[MAX_ATTACHED_OBJECTS]; // 9087
+	BOOL					attachedObjectSlot[MAX_ATTACHED_OBJECTS]; // 9607
+	BOOL					bHasAimSync;		// 9645
+	BOOL					bHasTrailerSync;	// 9649
+	BOOL					bHasUnoccupiedSync;	// 9653
+	BYTE					byteState;			// 9657
+	CVector					vecCPPos;			// 9658	- 9670
+	float					fCPSize;			// 9670 - 9674
+	BOOL					bIsInCP;			// 9674 - 9678
+	CVector					vecRaceCPPos;		// 9678
+	CVector					vecRaceCPNextPos;	// 9690
+	BYTE					byteRaceCPType;		// 9702
+	float					fRaceCPSize;		// 9703
+	BOOL					bIsInRaceCP;		// 9707
+	BOOL					bIsInModShop;		// 9711
+	WORD					wSkillLevel[11];	// 9715
+	int						iLastMarkerUpdate;	// 9737 - 9741
+	PLAYER_SPAWN_INFO		spawn;				// 9741 - 9787
+	BOOL					bReadyToSpawn;		// 9787 - 9791
+	BYTE					byteWantedLevel;	// 9791 - 9792
+	BYTE					byteFightingStyle;  // 9792 - 9793
+	BYTE					byteSeatId;			// 9793 - 9794
+	WORD					wVehicleId;			// 9794 - 9796
+	DWORD					iNickNameColor;		// 9796 - 9800
+	BOOL					bShowCheckpoint;	// 9800 - 9804
+	BOOL					bShowRaceCheckpoint;// 9804 - 9808
+	int						iInteriorId;		// 9808 - 9812
+	WORD					wWeaponAmmo[12];	// 9812 - 9836
+	PAD(pad10, 28);								// 9836 - 9864
+	BYTE					byteWeaponId[12];	// 9864 - 0x2688 - 0x2694
+	BYTE					byteWeaponID_unknown;// 9876 - 9877
+	BYTE					byteCurrentWeapon;	// 9877 - 9878
+	WORD					wTargetId;			// 9878 - 9880
+	// WORD					wTargetActorId;		// 11400 - 11402
+	DWORD					dwLastShotTick;		// 9880 - 9884
+	BYTE					byteLastShotWeapon;	// 9884 - 9885
+	CBulletSyncData			bulletSyncData;		// 9885 - 9924
+	BYTE					m_byteTime;			// 9924 - 9925
+	float					m_fGameTime;		// 9925 - 9929
+	BYTE					byteSpectateType;	// 9929 - 9930
+	DWORD					wSpectateID;		// 9930 - 9934
+	DWORD					dwLastStreaming;	// 9934 - 9938
+	DWORD					dwNPCRecordingType;	// 9938 - 9942
+	FILE					*pRecordingFile;	// 9942 - 9946
+	DWORD					dwFirstNPCWritingTime; // 9946 - 9950
+	PAD(unused, 9);								// 9950 - 9959
+	CPlayerVar*				pPlayerVars;		// 9959 - 9963
 	// Size = 9963
 };
 
 struct CPlayerPool // sizeof = 99520
 {
-	DWORD			dwVirtualWorld[MAX_PLAYERS];			// 0 - 4000
-	DWORD			dwPlayersCount;							// 4000 - 4004
-	DWORD			dwlastMarkerUpdate;						// 4004 - 4008
-	float			fUpdatePlayerGameTimers;				// 4008 - 4012
-	DWORD			dwScore[MAX_PLAYERS];					// 4012 - 8012
-	DWORD			dwMoney[MAX_PLAYERS];					// 8012 - 12012
-	DWORD			dwDrunkLevel[MAX_PLAYERS];				// 12012 - 16012
-	DWORD			dwLastScoreUpdate[MAX_PLAYERS];			// 16012 - 20012
-	char			szSerial[MAX_PLAYERS][101];				// 20012 - 121012
-	char			szVersion[MAX_PLAYERS][29];				// 121012 - 150012
-	BOOL			bIsPlayerConnectedEx[MAX_PLAYERS];		// 150012 - 154012
-	CPlayer			*pPlayer[MAX_PLAYERS];					// 154012 - 158012
-	char			szName[MAX_PLAYERS][25];				// 158012 - 183012
-	BOOL			bIsAnAdmin[MAX_PLAYERS];				// 183012 - 187012
-	BOOL			bIsNPC[MAX_PLAYERS];					// 187012 - 191012
+	DWORD			dwVirtualWorld[MAX_PLAYERS];			// 0 - 2000
+	DWORD			dwPlayersCount;							// 2000 - 2004
+	DWORD			dwlastMarkerUpdate;						// 2004 - 2008
+	float			fUpdatePlayerGameTimers;				// 2008 - 2012
+	DWORD			dwScore[MAX_PLAYERS];					// 2012 - 4012
+	DWORD			dwMoney[MAX_PLAYERS];					// 4012 - 6012
+	DWORD			dwDrunkLevel[MAX_PLAYERS];				// 6012 - 8012
+	DWORD			dwLastScoreUpdate[MAX_PLAYERS];			// 8012 - 10012
+	char			szSerial[MAX_PLAYERS][101];				// 10012 - 60512
+	char			szVersion[MAX_PLAYERS][29];				// 60512 - 75012
+	BOOL			bIsPlayerConnectedEx[MAX_PLAYERS];		// 75012 - 77012
+	CPlayer			*pPlayer[MAX_PLAYERS];					// 77012 - 79012
+	char			szName[MAX_PLAYERS][25];				// 79012 - 91512
+	BOOL			bIsAnAdmin[MAX_PLAYERS];				// 91512 - 93512
+	BOOL			bIsNPC[MAX_PLAYERS];					// 93512 - 95512
+/*
 	PAD(pad0, 8000);											// 191012 - 199012
 	DWORD			dwConnectedPlayers;						// 199012 - 199016
 	DWORD			dwPlayerPoolSize;						// 199016 - 199020
+*/
 };
 
 /* -------------------------------------------------------- */
@@ -461,7 +474,7 @@ struct CVehicleModInfo // sizeof = 26
     int				iColor2;                             // + 0x0010
 };
 
-struct CVehicleParams // sizeof = 16
+struct CVehicleParams // sizeof = 6
 {
 	BYTE engine;
 	BYTE lights;
@@ -470,6 +483,7 @@ struct CVehicleParams // sizeof = 16
 	BYTE bonnet;
 	BYTE boot;
 	BYTE objective; // 6
+/*
 	BYTE siren; // 7
 	BYTE door_driver; // 8
 	BYTE door_passenger;
@@ -479,6 +493,7 @@ struct CVehicleParams // sizeof = 16
 	BYTE window_passenger;
 	BYTE window_backleft;
 	BYTE window_backright; // 15 - 16
+*/
 };
 
 struct CVehicle
@@ -503,21 +518,21 @@ struct CVehicle
 	bool			bDead;				// 180 - 181
 	WORD			wKillerID;			// 181 - 183
 	CVehicleModInfo vehModInfo;			// 183 - 206
-	char			szNumberplate[32 + 1]; // 206 - 239
-	CVehicleParams	vehParamEx;			// 239 - 255
-    BYTE			bDeathNotification; // 255 - 256
-    BYTE			bOccupied;			// 256 - 257
-    DWORD			vehOccupiedTick;	// 257 - 261
-    DWORD			vehRespawnTick;		// 261 -265
+    char			szNumberplate[32 + 1]; // 206 - 239
+	CVehicleParams	vehParamEx;			// 239 - 246
+    BYTE			bDeathNotification; // 246 - 247
+    BYTE			bOccupied;			// 247 - 248
+    DWORD			vehOccupiedTick;	// 248 - 252
+    DWORD			vehRespawnTick;		// 252 - 256
 };
 
 struct CVehiclePool
 {
-	BYTE			byteVehicleModelsUsed[212];			// 0 - 212
-	int				iVirtualWorld[MAX_VEHICLES];		// 212 - 8212
-	BOOL			bVehicleSlotState[MAX_VEHICLES];	// 8212 - 16212
+	BOOL			bVehicleSlotState[MAX_VEHICLES];	// 0 - 8000
+	BYTE			byteVehicleModelsUsed[212];			// 8000 - 8212
+	int				iVirtualWorld[MAX_VEHICLES];		// 8212 - 16212
 	CVehicle		*pVehicle[MAX_VEHICLES];			// 16212 - 24212
-	DWORD			dwVehiclePoolSize;					// 24212
+	// DWORD			dwVehiclePoolSize;					// 24212
 };
 
 /* -------------------------------------------------------- */
@@ -551,6 +566,7 @@ struct CObjectMaterial // sizeof = 212
 	DWORD			dwMaterialColor;		// 201 - 205
 	char			szMaterialTXD[64 + 1];	// 205 - 270
 	char			szMaterialTexture[64 + 1]; // 270 - 335
+	BYTE unk;
 	BYTE			byteMaterialSize;		// 335 - 336
 	char			szFont[64 + 1];			// 336 - 401
 	BYTE			byteFontSize;			// 401 - 402
@@ -661,7 +677,7 @@ struct CSAMPGangZonePool
 /* -------------------------------------------------------- */
 // CActor
 /* -------------------------------------------------------- */
-
+/*
 struct CActorAnim // 140
 {
 	char			szAnimLib[64]; // 0 - 64
@@ -701,6 +717,7 @@ struct CActorPool
 	CActor*			pActor[MAX_ACTORS];
 	DWORD			dwActorPoolSize;
 };
+*/
 
 struct CGameMode
 {
@@ -750,7 +767,7 @@ struct CNetGame
 	CTextDrawPool			*pTextDrawPool;			// 28
 	C3DTextPool				*p3DTextPool;			// 32
 	CGangZonePool			*pGangZonePool;			// 36
-	CActorPool				*pActorPool;			// 40
+	// CActorPool				*pActorPool;			// 40
 	int						iCurrentGameModeIndex;	// 44
 	int						iCurrentGameModeRepeat;	// 48
 	BOOL					bFirstGameModeLoaded;	// 52
@@ -1031,7 +1048,7 @@ public:
 	virtual void RemoveRouterInterface( void *routerInterface );
 	virtual int GetIndexFromPlayerID( PlayerID playerId ); // E4
 	virtual PlayerID GetPlayerIDFromIndex( int index ); // E8 - 232 - 236
-	virtual void UNKNOWN(void); // 236 - 240
+	// virtual void UNKNOWN(void); // 236 - 240
 	virtual void AddToBanList( const char *IP, unsigned int milliseconds=0 ); // 240 - 244
 	virtual void RemoveFromBanList( const char *IP );
 	virtual void ClearBanList( void );
